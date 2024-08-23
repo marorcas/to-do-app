@@ -1,1 +1,32 @@
-# to-do-app
+# To Do App
+
+## Table of Contents
+
+- [Description](#description)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Roadmap](#roadmap)
+- [Changelog](#changelog)
+
+## Description
+
+An application that allows you to track, add, and delete tasks as well as manage categories of tasks.
+
+## Features
+
+Key features of the project.
+
+## Installation
+
+Step-by-step guide on how to set up the project.
+
+## Usage
+
+Instructions and examples on how to use the project.
+
+## Roadmap
+
+Planned future features and improvements: 
+
+## Changelog
