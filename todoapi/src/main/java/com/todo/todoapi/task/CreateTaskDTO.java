@@ -23,4 +23,9 @@ public class CreateTaskDTO {
     public Long getCategoryId() {
         return categoryId;
     }
+
+    @Override
+    public String toString() {
+        return "CreateTaskDTO [description=" + description + ", categoryID= " + categoryId + "]";
+    }
 }

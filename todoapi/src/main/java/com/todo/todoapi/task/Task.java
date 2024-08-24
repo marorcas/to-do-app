@@ -15,6 +15,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "tasks")
 public class Task {
+
+    public Task() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,4 +30,28 @@ public class Task {
     @JoinColumn(name = "category_id")
     @JsonIgnoreProperties("tasks")
     private Category category;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

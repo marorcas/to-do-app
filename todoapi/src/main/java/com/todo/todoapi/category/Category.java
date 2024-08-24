@@ -20,10 +20,38 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(unique = true)
     private String name;
 
     @OneToMany(mappedBy = "category")
     @JsonIgnoreProperties("category")
     private List<Task> tasks;
+
+    public Category() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    @Override
+    public String toString() {
+        return "Category [name=" + name + ", tasks=" + tasks + "]";
+    }
 }
