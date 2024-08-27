@@ -29,7 +29,7 @@ public class TaskService {
         return this.repo.findById(id);
     }
 
-    public Optional<Task> updateTaskById(Long id, @Valid UpdateTaskDTO data) {
+    public Optional<Task> updateById(Long id, @Valid UpdateTaskDTO data) {
         Optional<Task> result = this.findById(id);
         if (result.isEmpty()) {
             return result;
@@ -45,5 +45,16 @@ public class TaskService {
 
         Task updatedTask = this.repo.save(foundTask);
         return Optional.of(updatedTask);
+    }
+
+    public boolean deleteById(Long id) {
+        Optional<Task> result = this.findById(id);
+
+        if (result.isEmpty()) {
+            return false;
+        }
+
+        this.repo.delete(result.get());
+        return true;
     }
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,9 +49,20 @@ public class TaskController {
     @PatchMapping("/{id}")
     public ResponseEntity<Task> updateTaskById(@PathVariable Long id, @Valid @RequestBody UpdateTaskDTO data)
             throws NotFoundException {
-        Optional<Task> result = this.taskService.updateTaskById(id, data);
+        Optional<Task> result = this.taskService.updateById(id, data);
         Task foundTask = result.orElseThrow(
                 () -> new NotFoundException("Could not find task with id " + id));
         return new ResponseEntity<Task>(foundTask, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTaskById(@PathVariable Long id) throws NotFoundException {
+        boolean result = this.taskService.deleteById(id);
+
+        if (result == false) {
+            throw new NotFoundException("Could not find task with id " + id);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
