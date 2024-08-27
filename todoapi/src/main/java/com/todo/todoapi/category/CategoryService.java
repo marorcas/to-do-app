@@ -1,15 +1,15 @@
-package com.todo.todoapi.category;
+// package com.todo.todoapi.category;
 
-import org.springframework.stereotype.Service;
+// import org.springframework.stereotype.Service;
 
-import jakarta.validation.Valid;
+// import jakarta.validation.Valid;
 
-@Service
-public class CategoryService {
+// @Service
+// public class CategoryService {
 
-    public String createCategory(@Valid CreateCategoryDTO data) {
-        System.out.println("From service: " + data);
-        return "Got to service";
-    }
+// public String createCategory(@Valid CreateCategoryDTO data) {
+// System.out.println("From service: " + data);
+// return "Got to service";
+// }
 
-}
+// }
