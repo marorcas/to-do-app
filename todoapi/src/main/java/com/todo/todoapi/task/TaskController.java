@@ -46,9 +46,11 @@ public class TaskController {
     }
 
     @PatchMapping("/{id}")
-    public String updateTaskById(@PathVariable Long id, @Valid @RequestBody UpdateTaskDTO data) {
-        System.out.println(data);
-        System.out.println(id);
-        return "Updates task";
+    public ResponseEntity<Task> updateTaskById(@PathVariable Long id, @Valid @RequestBody UpdateTaskDTO data)
+            throws NotFoundException {
+        Optional<Task> result = this.taskService.updateTaskById(id, data);
+        Task foundTask = result.orElseThrow(
+                () -> new NotFoundException("Could not find task with id " + id));
+        return new ResponseEntity<Task>(foundTask, HttpStatus.OK);
     }
 }

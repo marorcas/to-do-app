@@ -28,4 +28,22 @@ public class TaskService {
     public Optional<Task> findById(Long id) {
         return this.repo.findById(id);
     }
+
+    public Optional<Task> updateTaskById(Long id, @Valid UpdateTaskDTO data) {
+        Optional<Task> result = this.findById(id);
+        if (result.isEmpty()) {
+            return result;
+        }
+
+        Task foundTask = result.get();
+        if (data.getDescription() != null) {
+            foundTask.setDescription(data.getDescription().trim());
+        }
+        if (data.getCategory() != null) {
+            foundTask.setCategory(data.getCategory().trim().toLowerCase());
+        }
+
+        Task updatedTask = this.repo.save(foundTask);
+        return Optional.of(updatedTask);
+    }
 }
