@@ -51,21 +51,29 @@ public class TaskService {
     }
 
     public Optional<Task> updateById(Long id, @Valid UpdateTaskDTO data) throws Exception {
+        ValidationErrors errors = new ValidationErrors();
+
         Optional<Task> result = this.findById(id);
         if (result.isEmpty()) {
             return result;
         }
 
         Task foundTask = result.get();
+
         if (data.getDescription() != null) {
             foundTask.setDescription(data.getDescription().trim());
         }
         if (data.getCategoryId() != null) {
             Optional<Category> categoryResult = this.categoryService.findById(data.getCategoryId());
             if (categoryResult.isEmpty()) {
-                throw new Exception("Category does not exist");
+                errors.addError("category", String.format("Category with id %s does not exist", data.getCategoryId()));
+            } else {
+                foundTask.setCategory(categoryResult.get());
             }
-            foundTask.setCategory(categoryResult.get());
+
+            if (errors.hasErrors()) {
+                throw new ServiceValidationException(errors);
+            }
         }
 
         Task updatedTask = this.repo.save(foundTask);
