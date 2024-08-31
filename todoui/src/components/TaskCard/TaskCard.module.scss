@@ -1,0 +1,11 @@
+.TaskCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    border: 1px solid black;
+}
+
+.Task, .Category {
+    font-weight: normal;
+}

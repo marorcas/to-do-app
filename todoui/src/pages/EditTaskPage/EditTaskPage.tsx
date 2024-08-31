@@ -30,7 +30,8 @@ const EditTaskPage = () => {
             });
     }, []);
 
-    const formSubmit = (data: TaskFormData) => {
+    const onSubmit = (data: TaskFormData) => {
+        console.log(data)
         editTaskById(idNumber, data)
             .then(() => navigate('/'))
             .catch(() => alert('Failed to update post'));
@@ -51,7 +52,7 @@ const EditTaskPage = () => {
                 <TaskForm 
                     formType='EDIT' 
                     defaultValues={task}
-                    onSubmit={formSubmit} 
+                    onSubmit={onSubmit} 
                 />
             }
         </>

@@ -13,7 +13,7 @@ interface TaskFormProps {
 
 const TaskForm = ({
     formType = 'ADD', 
-    defaultValues = {description: '', category: ''}, 
+    defaultValues = {description: '', category: {}}, 
     onSubmit 
 }: TaskFormProps) => {
     const {
@@ -22,6 +22,7 @@ const TaskForm = ({
         formState: { errors, isSubmitSuccessful }, 
         handleSubmit,
     } = useForm<TaskFormData>({ resolver: zodResolver(schema), defaultValues });
+
 
     isSubmitSuccessful && reset();
     
@@ -42,7 +43,7 @@ const TaskForm = ({
 
             <div className={styles.field}>
                 <label htmlFor="category">Category</label>
-                <input id="category" type="text" {...register('category')} />
+                <input id="category" type="text" {...register('category.name')} />
                 {errors?.category && 
                     <small className={styles.error_text}>
                         {errors.category.message}

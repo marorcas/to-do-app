@@ -5,7 +5,10 @@ const apiBaseURL = import.meta.env.VITE_API_BASE_URL;
 export interface TaskResponse {
     id: number;
     description: string;
-    category: string;
+    category: {
+        id: number;
+        name: string;
+    }
 }
 
 export const getAllTasks = async () => {
@@ -30,13 +33,20 @@ export const getTaskById = async (id: number) => {
 }
 
 export const editTaskById = async (id: number, data: TaskFormData) => {
+    const taskData = {
+        id: id,
+        description: data.description,
+        categoryId: data.category.id
+    }
+
     const response = await fetch(`${apiBaseURL}/tasks/${id}`, {
         method: 'PATCH',
-        body: JSON.stringify(data),
+        body: JSON.stringify(taskData),
         headers: {
             'Content-Type': 'application/json'
         }
     });
+  
     if (!response.ok) {
         throw new Error('Something went wrong');
     }
@@ -56,9 +66,15 @@ export const deleteTaskById = async (id: number) => {
 }
 
 export const createTask = async (data: TaskFormData) => {
+    const taskData = {
+        description: data.description,
+        categoryId: data.category.id ?? 0
+    }
+    console.log(taskData)
+
     const response = await fetch(`${apiBaseURL}/tasks`, {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: JSON.stringify(taskData),
         headers: {
             'Content-Type': 'application/json'
         }

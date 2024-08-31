@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { deleteTaskById, getAllTasks, TaskResponse } from "../../services/task-services"
 import TaskCard from "../../components/TaskCard/TaskCard";
+import styles from "./TasksPage.module.scss";
 
 
 const TasksPage = () => {
@@ -29,12 +30,14 @@ const TasksPage = () => {
         }
     }
 
+    console.log(tasks)
+
     return(
-        <>
+        <div className={styles.TasksPage}>
             {tasks.map((task) => (
                 <TaskCard key={task.id} task={task} onDelete={onDelete} />
             ))}
-        </>
+        </div>
     )
 }
 

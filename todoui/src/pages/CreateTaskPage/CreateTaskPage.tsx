@@ -7,7 +7,10 @@ const CreateTaskPage = () => {
     const navigate = useNavigate();
     const onSubmit = async (data: TaskFormData) => {
         createTask(data)
-            .then(() => navigate('/'))
+            .then((task) => {
+                console.log(task)
+                navigate('/');
+            })
             .catch((e) => console.log(e));
     }
     return(
