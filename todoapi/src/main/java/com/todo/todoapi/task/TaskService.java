@@ -6,6 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.todo.todoapi.category.Category;
+import com.todo.todoapi.category.CategoryService;
+import com.todo.todoapi.common.ValidationErrors;
+import com.todo.todoapi.common.exceptions.ServiceValidationException;
+
 import jakarta.validation.Valid;
 
 @Service
@@ -14,10 +19,26 @@ public class TaskService {
     @Autowired
     private TaskRepository repo;
 
-    public Task createTask(@Valid CreateTaskDTO data) {
+    @Autowired
+    private CategoryService categoryService;
+
+    public Task createTask(@Valid CreateTaskDTO data) throws Exception {
+        ValidationErrors errors = new ValidationErrors();
+
         Task newTask = new Task();
         newTask.setDescription(data.getDescription().trim());
-        newTask.setCategory(data.getCategory().trim().toLowerCase());
+
+        Optional<Category> categoryResult = this.categoryService.findById(data.getCategoryId());
+        if (categoryResult.isEmpty()) {
+            errors.addError("category", String.format("Category with id %s does not exist", data.getCategoryId()));
+        }
+
+        if (errors.hasErrors()) {
+            throw new ServiceValidationException(errors);
+        }
+
+        newTask.setCategory(categoryResult.get());
+
         return this.repo.save(newTask);
     }
 
@@ -29,7 +50,7 @@ public class TaskService {
         return this.repo.findById(id);
     }
 
-    public Optional<Task> updateById(Long id, @Valid UpdateTaskDTO data) {
+    public Optional<Task> updateById(Long id, @Valid UpdateTaskDTO data) throws Exception {
         Optional<Task> result = this.findById(id);
         if (result.isEmpty()) {
             return result;
@@ -39,8 +60,12 @@ public class TaskService {
         if (data.getDescription() != null) {
             foundTask.setDescription(data.getDescription().trim());
         }
-        if (data.getCategory() != null) {
-            foundTask.setCategory(data.getCategory().trim().toLowerCase());
+        if (data.getCategoryId() != null) {
+            Optional<Category> categoryResult = this.categoryService.findById(data.getCategoryId());
+            if (categoryResult.isEmpty()) {
+                throw new Exception("Category does not exist");
+            }
+            foundTask.setCategory(categoryResult.get());
         }
 
         Task updatedTask = this.repo.save(foundTask);

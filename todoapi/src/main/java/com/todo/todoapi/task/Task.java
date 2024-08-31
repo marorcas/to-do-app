@@ -1,25 +1,20 @@
 package com.todo.todoapi.task;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.todo.todoapi.category.Category;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tasks")
 public class Task {
-
-    public Task(Long id, String description, String category) {
-        this.id = id;
-        this.description = description;
-        this.category = category;
-    }
-
-    public Task() {
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,8 +22,13 @@ public class Task {
     @Column
     private String description;
 
-    @Column
-    private String category;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @JsonIgnoreProperties("tasks")
+    private Category category;
+
+    public Task() {
+    }
 
     public Long getId() {
         return id;
@@ -38,7 +38,7 @@ public class Task {
         return description;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
@@ -50,12 +50,7 @@ public class Task {
         this.description = description;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
-
-    // @ManyToOne
-    // @JoinColumn(name = "category_id")
-    // @JsonIgnoreProperties("tasks")
-    // private Category category;
 }

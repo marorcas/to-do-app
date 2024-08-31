@@ -2,7 +2,9 @@ package com.todo.todoapi.task;
 
 import org.hibernate.validator.constraints.Length;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class CreateTaskDTO {
 
@@ -10,24 +12,29 @@ public class CreateTaskDTO {
     @Length(min = 5)
     private String description;
 
-    @NotBlank
-    private String category;
-
-    // @NotNull
-    // @Min(1)
-    // private Long categoryId;
+    @NotNull
+    @Min(1)
+    private Long categoryId;
 
     public String getDescription() {
         return description;
     }
 
-    public String getCategory() {
-        return category;
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     @Override
     public String toString() {
         return "CreateTaskDTO [description=" + description + ", category= " +
-                category + "]";
+                categoryId + "]";
     }
 }

@@ -1,23 +1,36 @@
-// package com.todo.todoapi.category;
+package com.todo.todoapi.category;
 
-// import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-// import jakarta.validation.Valid;
+import jakarta.validation.Valid;
 
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.web.bind.annotation.PostMapping;
-// import org.springframework.web.bind.annotation.RequestBody;
+import java.util.List;
 
-// @RestController
-// @RequestMapping("categories")
-// public class CategoryController {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 
-// @Autowired
-// private CategoryService categoryService;
+@RestController
+@RequestMapping("categories")
+public class CategoryController {
 
-// @PostMapping
-// public String createCategory(@Valid @RequestBody CreateCategoryDTO data) {
-// return this.categoryService.createCategory(data);
-// }
-// }
+    @Autowired
+    private CategoryService categoryService;
+
+    @PostMapping
+    public ResponseEntity<Category> createCategory(@Valid @RequestBody CreateCategoryDTO data) throws Exception {
+        Category newCategory = this.categoryService.createCategory(data);
+        return new ResponseEntity<Category>(newCategory, HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Category>> findAllCategories() {
+        List<Category> categories = this.categoryService.findAll();
+        return new ResponseEntity<List<Category>>(categories, HttpStatus.OK);
+    }
+
+}

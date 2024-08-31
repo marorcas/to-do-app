@@ -27,7 +27,7 @@ public class TaskController {
     private TaskService taskService;
 
     @PostMapping
-    public ResponseEntity<Task> createTask(@Valid @RequestBody CreateTaskDTO data) {
+    public ResponseEntity<Task> createTask(@Valid @RequestBody CreateTaskDTO data) throws Exception {
         Task createdTask = this.taskService.createTask(data);
         return new ResponseEntity<Task>(createdTask, HttpStatus.CREATED);
     }
@@ -48,7 +48,7 @@ public class TaskController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<Task> updateTaskById(@PathVariable Long id, @Valid @RequestBody UpdateTaskDTO data)
-            throws NotFoundException {
+            throws Exception {
         Optional<Task> result = this.taskService.updateById(id, data);
         Task foundTask = result.orElseThrow(
                 () -> new NotFoundException("Could not find task with id " + id));
