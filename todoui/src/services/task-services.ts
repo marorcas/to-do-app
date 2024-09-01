@@ -1,14 +1,12 @@
 import { TaskFormData } from "../components/TaskForm/schema";
+import { CategoryResponse } from "./category-services";
 
 const apiBaseURL = import.meta.env.VITE_API_BASE_URL;
 
 export interface TaskResponse {
     id: number;
     description: string;
-    category: {
-        id: number;
-        name: string;
-    }
+    category: CategoryResponse;
 }
 
 export const getAllTasks = async () => {
@@ -33,15 +31,9 @@ export const getTaskById = async (id: number) => {
 }
 
 export const editTaskById = async (id: number, data: TaskFormData) => {
-    const taskData = {
-        id: id,
-        description: data.description,
-        categoryId: data.category.id
-    }
-
     const response = await fetch(`${apiBaseURL}/tasks/${id}`, {
         method: 'PATCH',
-        body: JSON.stringify(taskData),
+        body: JSON.stringify(data),
         headers: {
             'Content-Type': 'application/json'
         }
@@ -66,15 +58,9 @@ export const deleteTaskById = async (id: number) => {
 }
 
 export const createTask = async (data: TaskFormData) => {
-    const taskData = {
-        description: data.description,
-        categoryId: data.category.id ?? 0
-    }
-    console.log(taskData)
-
     const response = await fetch(`${apiBaseURL}/tasks`, {
         method: 'POST',
-        body: JSON.stringify(taskData),
+        body: JSON.stringify(data),
         headers: {
             'Content-Type': 'application/json'
         }

@@ -14,7 +14,7 @@ const TaskCard = ({ task, onDelete }: TaskProps) => {
             key={task.id}
         >
             <h2 className={styles.Task}>{task.description}</h2>
-            <h3 className={styles.Category}>Category: {task.category?.name}</h3>
+            <h3 className={styles.Category}>category: {task.category?.name ?? 'none'}</h3>
 
             <button onClick={() => onDelete(task.id)}>Delete</button>
             <Link to={`tasks/${task.id}/edit`}>Edit</Link>
