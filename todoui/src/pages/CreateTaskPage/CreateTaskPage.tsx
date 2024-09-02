@@ -6,6 +6,7 @@ import { createTask } from "../../services/task-services";
 const CreateTaskPage = () => {
     const navigate = useNavigate();
     const onSubmit = async (data: TaskFormData) => {
+        console.log(data)
         createTask(data)
             .then((task) => {
                 console.log(task)

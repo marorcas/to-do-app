@@ -8,15 +8,15 @@ function App() {
   return (
     <>
       <h1>To Do List</h1>
-      <BrowserRouter>
-        <Routes>
-          <CategoryContextProvider>
-            <Route path="/" element={<TasksPage />} />
-            <Route path="/tasks/add" element={<CreateTaskPage />} />
-            <Route path="/tasks/:id/edit" element={<EditTaskPage />} />
-          </CategoryContextProvider>
-        </Routes>
-      </BrowserRouter>
+      <CategoryContextProvider>
+        <BrowserRouter>
+          <Routes>
+              <Route path="/" element={<TasksPage />} />
+              <Route path="/tasks/add" element={<CreateTaskPage />} />
+              <Route path="/tasks/:id/edit" element={<EditTaskPage />} />
+          </Routes>
+        </BrowserRouter>
+      </CategoryContextProvider>
     </>
   )
 }

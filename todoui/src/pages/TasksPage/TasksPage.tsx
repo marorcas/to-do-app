@@ -30,8 +30,6 @@ const TasksPage = () => {
         }
     }
 
-    console.log(tasks)
-
     return(
         <div className={styles.TasksPage}>
             {tasks.map((task) => (

@@ -36,7 +36,7 @@ export const editTaskById = async (id: number, data: TaskFormData) => {
     const taskData = {
         id: id,
         description: data.description,
-        categoryId: data.category.id
+        categoryId: data.category.id ?? 0
     }
 
     const response = await fetch(`${apiBaseURL}/tasks/${id}`, {
