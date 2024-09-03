@@ -32,6 +32,7 @@ const TasksPage = () => {
 
     return(
         <div className={styles.TasksPage}>
+            <h1>To Do List</h1>
             {tasks.map((task) => (
                 <TaskCard key={task.id} task={task} onDelete={onDelete} />
             ))}

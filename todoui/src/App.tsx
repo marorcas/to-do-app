@@ -7,7 +7,6 @@ import CategoryContextProvider from "./contexts/CategoryContextProvider/Category
 function App() {
   return (
     <>
-      <h1>To Do List</h1>
       <CategoryContextProvider>
         <BrowserRouter>
           <Routes>

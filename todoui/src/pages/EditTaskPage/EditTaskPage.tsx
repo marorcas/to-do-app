@@ -30,6 +30,8 @@ const EditTaskPage = () => {
             });
     }, []);
 
+    console.log(task)
+
     const onSubmit = async (data: TaskFormData) => {
         console.log(data)
         const dataTask = editTaskById(idNumber, data)

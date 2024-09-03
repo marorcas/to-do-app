@@ -13,11 +13,16 @@ const TaskCard = ({ task, onDelete }: TaskProps) => {
             className={styles.TaskCard}
             key={task.id}
         >
-            <h2 className={styles.Task}>{task.description}</h2>
-            <h3 className={styles.Category}>category: {task.category?.name ?? 'none'}</h3>
+            <div className={styles.TaskInfo}>
+                <h2 className={styles.Task}>{task.description}</h2>
+                <h3 className={styles.Category}>category: {task.category?.name ?? 'none'}</h3>
+            </div>
 
-            <button onClick={() => onDelete(task.id)}>Delete</button>
-            <Link to={`tasks/${task.id}/edit`}>Edit</Link>
+            <div className={styles.Buttons}>
+                <button onClick={() => onDelete(task.id)}>Delete</button>
+                <button>Duplicate</button>
+                <Link to={`tasks/${task.id}/edit`}>Edit</Link>
+            </div>
         </article>
     )
 }

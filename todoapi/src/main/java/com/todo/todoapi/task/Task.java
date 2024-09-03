@@ -23,7 +23,7 @@ public class Task {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = true)
     @JsonIgnoreProperties("tasks")
     private Category category;
 

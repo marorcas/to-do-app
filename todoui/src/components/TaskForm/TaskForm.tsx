@@ -15,7 +15,7 @@ interface TaskFormProps {
 
 const TaskForm = ({
     formType = 'ADD', 
-    defaultValues = {description: '', categoryId: 0}, 
+    defaultValues = {description: '', categoryId: undefined}, 
     onSubmit 
 }: TaskFormProps) => {
 
@@ -27,15 +27,16 @@ const TaskForm = ({
     } = useForm<TaskFormData>({ resolver: zodResolver(schema), defaultValues });
 
     const [description, setDescription] = useState<string>(defaultValues.description);
-    const [selectedCategory, setSelectedCategory] = useState<number | undefined>(defaultValues.categoryId);
+    const [selectedCategoryId, setSelectedCategoryId] = useState<number | undefined>(defaultValues.categoryId);
+
+    console.log(defaultValues.categoryId)
 
     const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setDescription(event.target.value);
     }
 
     const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = event.target.value;
-        setSelectedCategory(parseInt(value, 10));
+        setSelectedCategoryId(parseInt(event.target.value));
     }
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -43,9 +44,13 @@ const TaskForm = ({
 
         const data: TaskFormData = { description };
 
-        if (selectedCategory !== 0 || selectedCategory !== undefined) {
-            data.categoryId = selectedCategory;
+        if (selectedCategoryId !== undefined) {
+            data.categoryId = selectedCategoryId;
         }
+
+        // if (selectedCategoryId === 0) {
+        //     data.categoryId = undefined;
+        // }
 
         onSubmit(data);
     };
@@ -74,7 +79,7 @@ const TaskForm = ({
             <div className={styles.field}>
                 <label htmlFor="category">Category</label>
                 <CategorySelector 
-                    selectedCategoryId={selectedCategory} 
+                    selectedCategoryId={selectedCategoryId} 
                     onChange={handleCategoryChange} 
                 />
                 {errors?.categoryId && 

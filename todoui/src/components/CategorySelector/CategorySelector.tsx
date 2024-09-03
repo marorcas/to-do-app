@@ -8,8 +8,10 @@ interface CategorySelectorProps {
     onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const CategorySelector = React.memo(( { selectedCategoryId, onChange}: CategorySelectorProps ) => {
-    // const [selectedCategory, setSelectedCategory] = useState<number>(selectedCategoryId);
+const CategorySelector = ({ 
+    selectedCategoryId, 
+    onChange
+}: CategorySelectorProps ) => {
 
     const context = useContext(CategoryContext);
 
@@ -25,12 +27,8 @@ const CategorySelector = React.memo(( { selectedCategoryId, onChange}: CategoryS
             .catch((e) => console.warn(e));
     }, []);
 
-    // const handleOnChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    //     setSelectedCategory(parseInt(event.target.value));
-    // };
-
     return(
-        <select defaultValue={selectedCategoryId} id="categoryId" onChange={onChange}>
+        <select value={selectedCategoryId} onChange={onChange}>
             <option key={0} value={0}>Select a category</option>
             {categories.map((category) => (
                 <option key={category.id} value={category.id}>
@@ -39,6 +37,6 @@ const CategorySelector = React.memo(( { selectedCategoryId, onChange}: CategoryS
             ))}
         </select>
     )
-})
+}
 
 export default CategorySelector;

@@ -1,7 +1,7 @@
 import { createContext, FC, ReactNode, useEffect, useState } from "react";
 
 interface Category {
-    id: number;
+    id: number | undefined;
     name: string;
 }
 
