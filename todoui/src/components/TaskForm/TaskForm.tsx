@@ -62,31 +62,35 @@ const TaskForm = ({
             className={styles.form} 
             onSubmit={handleSubmit}
         >
-            <div className={styles.field}>
-                <label htmlFor="description">Description</label>
-                <input 
-                    id="description" 
-                    type="text" {...register('description')} 
-                    onChange={handleDescriptionChange}
-                />
-                {errors?.description && 
-                    <small className={styles.error_text}>
-                        {errors.description.message}
-                    </small>
-                }
-            </div>
 
             <div className={styles.field}>
-                <label htmlFor="category">Category</label>
-                <CategorySelector 
-                    selectedCategoryId={selectedCategoryId} 
-                    onChange={handleCategoryChange} 
-                />
-                {errors?.categoryId && 
-                    <small className={styles.error_text}>
-                        {errors.categoryId.message}
-                    </small>
-                }
+                {/* <div className={styles.field}> */}
+                    {/* <label htmlFor="description">Description</label> */}
+                    <input 
+                        id="description" 
+                        type="text" {...register('description')} 
+                        onChange={handleDescriptionChange}
+                        placeholder="Add description..."
+                    />
+                    {errors?.description && 
+                        <small className={styles.error_text}>
+                            {errors.description.message}
+                        </small>
+                    }
+                {/* </div> */}
+
+                {/* <div className={styles.field}> */}
+                    {/* <label htmlFor="category">Category</label> */}
+                    <CategorySelector 
+                        selectedCategoryId={selectedCategoryId} 
+                        onChange={handleCategoryChange} 
+                    />
+                    {errors?.categoryId && 
+                        <small className={styles.error_text}>
+                            {errors.categoryId.message}
+                        </small>
+                    }
+                {/* </div> */}
             </div>
             
             <button type="submit">{formType === 'ADD' ? 'Add' : 'Edit'}</button>
