@@ -33,15 +33,22 @@ export const getTaskById = async (id: number) => {
 }
 
 export const editTaskById = async (id: number, data: TaskFormData) => {
-    const taskData = {
-        id: id,
-        description: data.description,
-        categoryId: data.category.id ?? 0
-    }
+    // let taskData;
+
+    // if (data.category) {
+    //     taskData = {
+    //         description: data.description,
+    //         categoryId: data.category.id ?? null
+    //     }
+    // } else {
+    //     taskData = {
+    //         description: data.description,
+    //     }
+    // }
 
     const response = await fetch(`${apiBaseURL}/tasks/${id}`, {
         method: 'PATCH',
-        body: JSON.stringify(taskData),
+        body: JSON.stringify(data),
         headers: {
             'Content-Type': 'application/json'
         }
@@ -66,15 +73,24 @@ export const deleteTaskById = async (id: number) => {
 }
 
 export const createTask = async (data: TaskFormData) => {
-    const taskData = {
-        description: data.description,
-        categoryId: data.category.id ?? 0
-    }
-    console.log(taskData)
+    // let taskData;
+
+    // if (data.category.id) {
+    //     taskData = {
+    //         description: data.description,
+    //         categoryId: data.category.id,
+    //     }
+    // } else {
+    //     taskData = {
+    //         description: data.description,
+    //     }
+    // }
+
+    // console.log(taskData)
 
     const response = await fetch(`${apiBaseURL}/tasks`, {
         method: 'POST',
-        body: JSON.stringify(taskData),
+        body: JSON.stringify(data),
         headers: {
             'Content-Type': 'application/json'
         }

@@ -29,15 +29,21 @@ public class TaskService {
         newTask.setDescription(data.getDescription().trim());
 
         Optional<Category> categoryResult = this.categoryService.findById(data.getCategoryId());
-        if (categoryResult.isEmpty()) {
+        // if (categoryResult.isEmpty()) {
+        // errors.addError("category", String.format("Category with id %s does not
+        // exist", data.getCategoryId()));
+        // }
+        if (data.getCategoryId() != null && categoryResult.isEmpty()) {
             errors.addError("category", String.format("Category with id %s does not exist", data.getCategoryId()));
+        } else if (categoryResult.isPresent()) {
+            newTask.setCategory(categoryResult.get());
         }
 
         if (errors.hasErrors()) {
             throw new ServiceValidationException(errors);
         }
 
-        newTask.setCategory(categoryResult.get());
+        // newTask.setCategory(categoryResult.get());
 
         return this.repo.save(newTask);
     }

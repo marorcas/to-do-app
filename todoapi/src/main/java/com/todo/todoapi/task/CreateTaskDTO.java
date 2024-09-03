@@ -12,8 +12,9 @@ public class CreateTaskDTO {
     @Length(min = 5)
     private String description;
 
-    @NotNull
-    @Min(1)
+    // @NotNull
+    // @Min(1)
+    @CategoryIdValid
     private Long categoryId;
 
     public String getDescription() {

@@ -30,11 +30,15 @@ const EditTaskPage = () => {
             });
     }, []);
 
-    const onSubmit = (data: TaskFormData) => {
+    const onSubmit = async (data: TaskFormData) => {
         console.log(data)
-        editTaskById(idNumber, data)
-            .then(() => navigate('/'))
+        const dataTask = editTaskById(idNumber, data)
+            .then((task) => {
+                console.log(task)
+                navigate('/')
+            })
             .catch(() => alert('Failed to update post'));
+        console.log(dataTask)
     }
 
     return (

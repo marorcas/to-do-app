@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { CategoryContext } from "../../contexts/CategoryContextProvider/CategoryContextProvider";
 import { getAllCategories } from "../../services/category-services";
+import React from "react";
 
 interface CategorySelectorProps {
-    selectedCategoryId: number;
+    selectedCategoryId: number | undefined;
+    onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const CategorySelector = ( {selectedCategoryId}: CategorySelectorProps ) => {
+const CategorySelector = React.memo(( { selectedCategoryId, onChange}: CategorySelectorProps ) => {
     // const [selectedCategory, setSelectedCategory] = useState<number>(selectedCategoryId);
 
     const context = useContext(CategoryContext);
@@ -28,8 +30,8 @@ const CategorySelector = ( {selectedCategoryId}: CategorySelectorProps ) => {
     // };
 
     return(
-        <select defaultValue={selectedCategoryId}>
-            <option value={0}>Select a category</option>
+        <select defaultValue={selectedCategoryId} id="categoryId" onChange={onChange}>
+            <option key={0} value={0}>Select a category</option>
             {categories.map((category) => (
                 <option key={category.id} value={category.id}>
                     {category.name}
@@ -37,6 +39,6 @@ const CategorySelector = ( {selectedCategoryId}: CategorySelectorProps ) => {
             ))}
         </select>
     )
-}
+})
 
 export default CategorySelector;
