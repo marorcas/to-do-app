@@ -20,7 +20,6 @@ import com.todo.todoapi.category.CategoryService;
 import com.todo.todoapi.common.exceptions.NotFoundException;
 
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("tasks")

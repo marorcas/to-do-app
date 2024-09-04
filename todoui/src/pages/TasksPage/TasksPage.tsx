@@ -1,7 +1,7 @@
-import { getAllTasks } from "../../services/task-services"
+import { getAllTasks, getTasksByCategory } from "../../services/task-services"
 import TaskCard from "../../components/TaskCard/TaskCard";
 import styles from "./TasksPage.module.scss";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { TaskContext } from "../../contexts/TaskContextProvider/TaskContextProvider";
 import { Link } from "react-router-dom";
 import CategorySelector from "../../components/CategorySelector/CategorySelector";
@@ -15,17 +15,28 @@ const TasksPage = () => {
 
     const { tasks, setTasks } = context;
 
-    const [categoryId, setCategoryId] = useState<number | undefined>(undefined);
+    const [categoryId, setCategoryId] = useState<number>(0);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setCategoryId(parseInt(event.target.value));
     }
 
     useEffect(() => {
-        getAllTasks()
-            .then((data) => setTasks(data))
-            .catch((e) => console.warn(e));
-    }, []);
+        if (categoryId > 0) {
+            getTasksByCategory(categoryId)
+            .then((data) => {
+                setTasks(data);
+            })
+            .catch((e) => {
+                console.warn(e);
+            });
+        } else {
+            getAllTasks()
+                .then((data) => setTasks(data))
+                .catch((e) => console.warn(e));
+        }
+    }, [categoryId]);
 
     return(
         <div className={styles.TasksPage}>
@@ -40,7 +51,7 @@ const TasksPage = () => {
                 className={styles.FilterByCategory}
             >
                 <label>Filter tasks by category:</label>
-                <CategorySelector selectedCategoryId={undefined} onChange={handleCategoryChange}/>
+                <CategorySelector selectedCategoryId={categoryId} onChange={handleCategoryChange}/>
             </form>
 
             {tasks.length === 0 ? (

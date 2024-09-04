@@ -30,7 +30,7 @@ export const getTaskById = async (id: number) => {
     return (await response.json()) as TaskResponse;
 }
 
-export const getTaskByCategory = async (id: number) => {
+export const getTasksByCategory = async (id: number) => {
     const response = await fetch(`${apiBaseURL}/tasks/category/${id}`);
     if (!response.ok) {
         throw new Error('Failed to fetch');
