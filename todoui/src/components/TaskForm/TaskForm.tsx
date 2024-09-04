@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { schema, TaskFormData } from "./schema";
 import styles from "./TaskForm.module.scss";
 import CategorySelector from "../CategorySelector/CategorySelector";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type FormType = 'ADD' | 'EDIT';
 
@@ -55,7 +55,13 @@ const TaskForm = ({
         onSubmit(data);
     };
 
-    isSubmitSuccessful && reset();
+    console.log(isSubmitSuccessful)
+
+    useEffect(() => {
+        console.log(isSubmitSuccessful)
+        reset();
+
+    }, [isSubmitSuccessful]);
 
     return(
         <form 
