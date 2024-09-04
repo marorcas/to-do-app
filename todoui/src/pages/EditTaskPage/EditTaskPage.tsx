@@ -7,14 +7,14 @@ import { TaskFormData } from "../../components/TaskForm/schema";
 type FetchStatus = 'IDLE' | 'LOADING' | 'SUCCESS' | 'FAILURE';
  
 const EditTaskPage = () => {
-    const [fetchStatus, setFetchStatus] = useState<FetchStatus>('IDLE');
-    const [error, setError] = useState<Error | null>(null);
-    const [task, setTask] = useState<TaskResponse | null>(null);
-
     const { id } = useParams() as { id: string };
     const idNumber = parseInt(id);
 
     const navigate = useNavigate();
+    
+    const [fetchStatus, setFetchStatus] = useState<FetchStatus>('IDLE');
+    const [error, setError] = useState<Error | null>(null);
+    const [task, setTask] = useState<TaskResponse | null>(null);
 
     useEffect(() => {
         setFetchStatus('LOADING');
@@ -29,8 +29,6 @@ const EditTaskPage = () => {
                 setError(e);
             });
     }, []);
-
-    console.log(task)
 
     const onSubmit = async (data: TaskFormData) => {
         console.log(data)
@@ -57,7 +55,7 @@ const EditTaskPage = () => {
             {fetchStatus === 'SUCCESS' && task && 
                 <TaskForm 
                     formType='EDIT' 
-                    defaultValues={task}
+                    defaultValues={{description: task.description, categoryId: task.category?.id}}
                     onSubmit={onSubmit} 
                 />
             }

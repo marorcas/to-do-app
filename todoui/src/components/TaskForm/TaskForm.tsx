@@ -3,7 +3,10 @@ import { useForm } from "react-hook-form";
 import { schema, TaskFormData } from "./schema";
 import styles from "./TaskForm.module.scss";
 import CategorySelector from "../CategorySelector/CategorySelector";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { TaskContext } from "../../contexts/TaskContextProvider/TaskContextProvider";
+import { deleteTaskById } from "../../services/task-services";
 
 type FormType = 'ADD' | 'EDIT';
 
@@ -23,55 +26,61 @@ const TaskForm = ({
         reset,
         register, 
         formState: { errors, isSubmitSuccessful }, 
-        // handleSubmit,
+        handleSubmit,
     } = useForm<TaskFormData>({ resolver: zodResolver(schema), defaultValues });
 
-    const [description, setDescription] = useState<string>(defaultValues.description);
-    const [selectedCategoryId, setSelectedCategoryId] = useState<number | undefined>(defaultValues.categoryId);
+    const context = useContext(TaskContext);
+    if (context === undefined) {
+        throw new Error('Something went wrong');
+    }
+    const { tasks, setTasks } = context;
 
-    console.log(defaultValues.categoryId)
+    const { id } = useParams() as { id: string };
+    const idNumber = parseInt(id);
+
+    const navigate = useNavigate();
+   
+    const [description, setDescription] = useState<string>(defaultValues.description);
+    const [categoryId, setCategoryId] = useState<number | undefined>(defaultValues.categoryId);
 
     const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setDescription(event.target.value);
     }
 
     const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedCategoryId(parseInt(event.target.value));
+        setCategoryId(parseInt(event.target.value));
     }
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
-        const data: TaskFormData = { description };
-
-        if (selectedCategoryId !== undefined) {
-            data.categoryId = selectedCategoryId;
+    const onDelete = async (id: number) => {
+        const confirmed = confirm("Are you sure you want to delete this task?");
+        if (!confirmed) {
+            return;
         }
 
-        // if (selectedCategoryId === 0) {
-        //     data.categoryId = undefined;
-        // }
+        const isDeleted = await deleteTaskById(id)
+            .catch((e) => {
+                console.log(e)
+                return false;
+            });
 
-        onSubmit(data);
-    };
+        if (isDeleted) {
+            const updatedTasks = tasks.filter(task => task.id !== id);
+            setTasks(updatedTasks);
+            navigate("/");
+        }
+    }
 
-    console.log(isSubmitSuccessful)
-
-    useEffect(() => {
-        console.log(isSubmitSuccessful)
-        reset();
-
-    }, [isSubmitSuccessful]);
+    isSubmitSuccessful && reset();
 
     return(
         <form 
             className={styles.form} 
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(() => onSubmit({description, categoryId}))}
         >
 
             <div className={styles.field}>
                 {/* <div className={styles.field}> */}
-                    {/* <label htmlFor="description">Description</label> */}
+                    <label htmlFor="description">Description</label>
                     <input 
                         id="description" 
                         type="text" {...register('description')} 
@@ -86,9 +95,9 @@ const TaskForm = ({
                 {/* </div> */}
 
                 {/* <div className={styles.field}> */}
-                    {/* <label htmlFor="category">Category</label> */}
+                    <label htmlFor="category">Category</label>
                     <CategorySelector 
-                        selectedCategoryId={selectedCategoryId} 
+                        selectedCategoryId={categoryId} 
                         onChange={handleCategoryChange} 
                     />
                     {errors?.categoryId && 
@@ -98,6 +107,8 @@ const TaskForm = ({
                     }
                 {/* </div> */}
             </div>
+
+            {formType === "EDIT" && <button onClick={() => onDelete(idNumber)}>Delete</button>}
             
             <button type="submit">{formType === 'ADD' ? 'Add' : 'Edit'}</button>
         </form>
