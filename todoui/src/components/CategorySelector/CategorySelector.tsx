@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { CategoryContext } from "../../contexts/CategoryContextProvider/CategoryContextProvider";
 import { getAllCategories } from "../../services/category-services";
 import React from "react";

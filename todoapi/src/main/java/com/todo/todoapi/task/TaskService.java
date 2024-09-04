@@ -42,11 +42,7 @@ public class TaskService {
             throw new ServiceValidationException(errors);
         }
 
-        // newTask.setCategory(categoryResult.get());
-
         return this.repo.save(newTask);
-
-        // return null;
     }
 
     public List<Task> findAll() {
@@ -55,6 +51,10 @@ public class TaskService {
 
     public Optional<Task> findById(Long id) {
         return this.repo.findById(id);
+    }
+
+    public List<Task> findByCategory(Category category) {
+        return this.repo.findByCategory(category);
     }
 
     public Optional<Task> updateById(Long id, @Valid UpdateTaskDTO data) throws Exception {

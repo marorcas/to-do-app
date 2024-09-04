@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.todo.todoapi.category.Category;
+import com.todo.todoapi.category.CategoryService;
 import com.todo.todoapi.common.exceptions.NotFoundException;
 
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("tasks")
@@ -25,6 +28,9 @@ public class TaskController {
 
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @PostMapping
     public ResponseEntity<Task> createTask(@Valid @RequestBody CreateTaskDTO data) throws Exception {
@@ -44,6 +50,15 @@ public class TaskController {
         Task foundTask = result.orElseThrow(
                 () -> new NotFoundException("Could not find task with id " + id));
         return new ResponseEntity<Task>(foundTask, HttpStatus.OK);
+    }
+
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<Task>> findTaskByCategory(@PathVariable Long id) {
+        Optional<Category> result = this.categoryService.findById(id);
+
+        List<Task> tasks = this.taskService.findByCategory(result.get());
+
+        return new ResponseEntity<List<Task>>(tasks, HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
