@@ -1,16 +1,25 @@
-import { deleteTaskById, getAllTasks, TaskResponse } from "../../services/task-services"
+import { deleteTaskById, getAllTasks } from "../../services/task-services"
 import TaskCard from "../../components/TaskCard/TaskCard";
 import styles from "./TasksPage.module.scss";
-import { useState } from "react";
 import NewTask from "../../components/NewTask/NewTask";
 import CategoryForm from "../../components/CategoryForm/CategoryForm";
+import { useContext, useEffect } from "react";
+import { TaskContext } from "../../contexts/TaskContextProvider/TaskContextProvider";
 
-interface TasksPageProps {
-    tasks: TaskResponse[];
-    setTasks: React.Dispatch<React.SetStateAction<TaskResponse[]>>
-}
+const TasksPage = () => {
+    const context = useContext(TaskContext);
 
-const TasksPage = ({ tasks, setTasks }: TasksPageProps) => {
+    if (context === undefined) {
+        throw new Error('Something went wrong');
+    }
+
+    const { tasks, setTasks } = context;
+
+    useEffect(() => {
+        getAllTasks()
+            .then((data) => setTasks(data))
+            .catch((e) => console.warn(e));
+    }, []);
 
     const onDelete = async (id: number) => {
         const confirmed = confirm("Are you sure you want to delete this task?");

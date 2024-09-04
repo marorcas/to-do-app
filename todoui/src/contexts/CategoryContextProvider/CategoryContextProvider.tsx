@@ -1,13 +1,9 @@
-import { createContext, FC, ReactNode, useEffect, useState } from "react";
-
-interface Category {
-    id: number | undefined;
-    name: string;
-}
+import { createContext, FC, ReactNode, useState } from "react";
+import { CategoryResponse } from "../../services/category-services";
 
 interface CategoryContextType {
-    categories: Category[];
-    setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
+    categories: CategoryResponse[];
+    setCategories: React.Dispatch<React.SetStateAction<CategoryResponse[]>>;
 }
 
 export const CategoryContext = createContext<CategoryContextType | undefined>(undefined);
@@ -17,7 +13,7 @@ interface CategoryContextProviderProps {
 }
 
 const CategoryContextProvider: FC<CategoryContextProviderProps> = ({ children }) => {
-    const [categories, setCategories] = useState<Category[]>([]);
+    const [categories, setCategories] = useState<CategoryResponse[]>([]);
 
     return (
         <CategoryContext.Provider value={{categories, setCategories}}>

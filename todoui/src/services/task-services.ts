@@ -31,8 +31,6 @@ export const getTaskById = async (id: number) => {
 }
 
 export const editTaskById = async (id: number, data: TaskFormData) => {
-<<<<<<< HEAD
-=======
     // let taskData;
 
     // if (data.category) {
@@ -46,7 +44,6 @@ export const editTaskById = async (id: number, data: TaskFormData) => {
     //     }
     // }
 
->>>>>>> faae23e6d7f97d0373fe1c6ba405770e1734248c
     const response = await fetch(`${apiBaseURL}/tasks/${id}`, {
         method: 'PATCH',
         body: JSON.stringify(data),
@@ -74,8 +71,6 @@ export const deleteTaskById = async (id: number) => {
 }
 
 export const createTask = async (data: TaskFormData) => {
-<<<<<<< HEAD
-=======
     // let taskData;
 
     // if (data.category.id) {
@@ -91,7 +86,6 @@ export const createTask = async (data: TaskFormData) => {
 
     // console.log(taskData)
 
->>>>>>> faae23e6d7f97d0373fe1c6ba405770e1734248c
     const response = await fetch(`${apiBaseURL}/tasks`, {
         method: 'POST',
         body: JSON.stringify(data),

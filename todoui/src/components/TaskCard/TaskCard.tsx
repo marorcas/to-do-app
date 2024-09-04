@@ -27,38 +27,29 @@ const TaskCard = ({ task, onDelete }: TaskProps) => {
     }
 
     return(
-<<<<<<< HEAD
         <article 
             className={styles.TaskCard}
             key={task.id}
         >
-            <h2 className={styles.Task}>{task.description}</h2>
-            <h3 className={styles.Category}>category: {task.category?.name ?? 'none'}</h3>
-=======
-        // <article 
-        //     className={styles.TaskCard}
-        //     key={task.id}
-        // >
-        //     <div className={styles.TaskInfo}>
-        //         <h2 className={styles.Task}>{task.description}</h2>
-        //         <h3 className={styles.Category}>category: {task.category?.name ?? 'none'}</h3>
-        //     </div>
+            <div className={styles.TaskInfo}>
+                <h2 className={styles.Task}>{task.description}</h2>
+                <h3 className={styles.Category}>category: {task.category?.name ?? 'none'}</h3>
+            </div>
 
-        //     <div className={styles.Buttons}>
-        //         <button onClick={() => onDelete(task.id)}>Delete</button>
-        //         <button>Duplicate</button>
-        //         <Link to={`tasks/${task.id}/edit`}>Edit</Link>
-        //     </div>
-        // </article>
-
-        <article>
-            <TaskForm formType="EDIT" defaultValues={taskData} onSubmit={onSubmit} />
->>>>>>> faae23e6d7f97d0373fe1c6ba405770e1734248c
-
-            <button onClick={() => onDelete(task.id)}>Delete</button>
-
-            <button>Duplicate</button>
+            <div className={styles.Buttons}>
+                <button onClick={() => onDelete(task.id)}>Delete</button>
+                <button>Duplicate</button>
+                <Link to={`tasks/${task.id}/edit`}>Edit</Link>
+            </div>
         </article>
+
+        // <article>
+        //     <TaskForm formType="EDIT" defaultValues={taskData} onSubmit={onSubmit} />
+
+        //     <button onClick={() => onDelete(task.id)}>Delete</button>
+
+        //     <button>Duplicate</button>
+        // </article>
         
     )
 }
