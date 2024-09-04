@@ -1,9 +1,9 @@
 import { getAllTasks } from "../../services/task-services"
 import TaskCard from "../../components/TaskCard/TaskCard";
 import styles from "./TasksPage.module.scss";
-import CategoryForm from "../../components/CategoryForm/CategoryForm";
 import { useContext, useEffect } from "react";
 import { TaskContext } from "../../contexts/TaskContextProvider/TaskContextProvider";
+import { Link } from "react-router-dom";
 
 const TasksPage = () => {
     const context = useContext(TaskContext);
@@ -22,11 +22,20 @@ const TasksPage = () => {
 
     return(
         <div className={styles.TasksPage}>
-            <h1>To Do List</h1>
+            <h1>Tasks</h1>
 
-            {tasks.map((task) => (
-                <TaskCard key={task.id} task={task} />
-            ))}
+            <div className={styles.Links}>
+                <Link to="/categories/new">Create category</Link>
+                <Link to="/tasks/new">Create task</Link>
+            </div>
+
+            {tasks.length === 0 ? (
+                <p>No tasks yet</p>
+            ) : (
+                tasks.map((task) => (
+                    <TaskCard key={task.id} task={task} />
+                ))
+            )}
         </div>
     )
 }
