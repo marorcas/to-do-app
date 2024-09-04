@@ -22,24 +22,31 @@ public class TaskService {
     @Autowired
     private CategoryService categoryService;
 
-    public Task createTask(@Valid CreateTaskDTO data) throws Exception {
+    public Task createTask(CreateTaskDTO data) throws Exception {
         ValidationErrors errors = new ValidationErrors();
 
         Task newTask = new Task();
         newTask.setDescription(data.getDescription().trim());
 
-        Optional<Category> categoryResult = this.categoryService.findById(data.getCategoryId());
-        if (categoryResult.isEmpty()) {
-            errors.addError("category", String.format("Category with id %s does not exist", data.getCategoryId()));
+        if (data.getCategoryId() != null) {
+            Optional<Category> categoryResult = this.categoryService.findById(data.getCategoryId());
+
+            if (categoryResult.isEmpty()) {
+                errors.addError("category", String.format("Category with id %s does not exist", data.getCategoryId()));
+            } else if (categoryResult.isPresent()) {
+                newTask.setCategory(categoryResult.get());
+            }
         }
 
         if (errors.hasErrors()) {
             throw new ServiceValidationException(errors);
         }
 
-        newTask.setCategory(categoryResult.get());
+        // newTask.setCategory(categoryResult.get());
 
         return this.repo.save(newTask);
+
+        // return null;
     }
 
     public List<Task> findAll() {

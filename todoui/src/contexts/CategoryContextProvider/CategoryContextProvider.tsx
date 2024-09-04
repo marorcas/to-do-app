@@ -1,7 +1,7 @@
-import { createContext, FC, ReactNode, useState } from "react";
+import { createContext, FC, ReactNode, useEffect, useState } from "react";
 
 interface Category {
-    id: number;
+    id: number | undefined;
     name: string;
 }
 
@@ -10,7 +10,7 @@ interface CategoryContextType {
     setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
 }
 
-export const CategoryContext = createContext<CategoryContextType | null>(null);
+export const CategoryContext = createContext<CategoryContextType | undefined>(undefined);
 
 interface CategoryContextProviderProps {
     children: ReactNode;

@@ -1,3 +1,5 @@
+import { CategoryFormData } from "../components/CategoryForm/schema";
+
 const apiBaseURL = import.meta.env.VITE_API_BASE_URL;
 
 export interface CategoryResponse {
@@ -37,23 +39,17 @@ export const deleteCategoryById = async (id: number) => {
     return true;
 }
 
-// export const createCategory = async (data: TaskFormData) => {
-//     const taskData = {
-//         description: data.description,
-//         categoryId: data.category.id ?? 0
-//     }
-//     console.log(taskData)
+export const createCategory = async (data: CategoryFormData) => {
+    const response = await fetch(`${apiBaseURL}/categories`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    if (!response) {
+        throw new Error('Failed to post');
+    }
 
-//     const response = await fetch(`${apiBaseURL}/tasks`, {
-//         method: 'POST',
-//         body: JSON.stringify(taskData),
-//         headers: {
-//             'Content-Type': 'application/json'
-//         }
-//     });
-//     if (!response) {
-//         throw new Error('Failed to post');
-//     }
-
-//     return (await response.json()) as CategoryResponse;
-// }
+    return (await response.json()) as CategoryResponse;
+}

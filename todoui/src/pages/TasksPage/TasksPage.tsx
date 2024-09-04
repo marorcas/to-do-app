@@ -1,17 +1,16 @@
-import { useEffect, useState } from "react"
 import { deleteTaskById, getAllTasks, TaskResponse } from "../../services/task-services"
 import TaskCard from "../../components/TaskCard/TaskCard";
 import styles from "./TasksPage.module.scss";
+import { useState } from "react";
+import NewTask from "../../components/NewTask/NewTask";
+import CategoryForm from "../../components/CategoryForm/CategoryForm";
 
+interface TasksPageProps {
+    tasks: TaskResponse[];
+    setTasks: React.Dispatch<React.SetStateAction<TaskResponse[]>>
+}
 
-const TasksPage = () => {
-    const [tasks, setTasks] = useState<TaskResponse[]>([]);
-
-    useEffect(() => {
-        getAllTasks()
-            .then(data => setTasks(data))
-            .catch((e) => console.log(e));
-    }, []);
+const TasksPage = ({ tasks, setTasks }: TasksPageProps) => {
 
     const onDelete = async (id: number) => {
         const confirmed = confirm("Are you sure you want to delete this task?");
@@ -30,10 +29,14 @@ const TasksPage = () => {
         }
     }
 
-    console.log(tasks)
-
     return(
         <div className={styles.TasksPage}>
+            <h1>To Do List</h1>
+
+            <CategoryForm />
+
+            <NewTask tasks={tasks} setTasks={setTasks} />
+
             {tasks.map((task) => (
                 <TaskCard key={task.id} task={task} onDelete={onDelete} />
             ))}
