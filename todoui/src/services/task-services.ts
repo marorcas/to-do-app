@@ -30,20 +30,16 @@ export const getTaskById = async (id: number) => {
     return (await response.json()) as TaskResponse;
 }
 
+export const getTaskByCategory = async (id: number) => {
+    const response = await fetch(`${apiBaseURL}/tasks/category/${id}`);
+    if (!response.ok) {
+        throw new Error('Failed to fetch');
+    }
+
+    return (await response.json()) as TaskResponse[];
+}
+
 export const editTaskById = async (id: number, data: TaskFormData) => {
-    // let taskData;
-
-    // if (data.category) {
-    //     taskData = {
-    //         description: data.description,
-    //         categoryId: data.category.id ?? null
-    //     }
-    // } else {
-    //     taskData = {
-    //         description: data.description,
-    //     }
-    // }
-
     const response = await fetch(`${apiBaseURL}/tasks/${id}`, {
         method: 'PATCH',
         body: JSON.stringify(data),
@@ -71,21 +67,6 @@ export const deleteTaskById = async (id: number) => {
 }
 
 export const createTask = async (data: TaskFormData) => {
-    // let taskData;
-
-    // if (data.category.id) {
-    //     taskData = {
-    //         description: data.description,
-    //         categoryId: data.category.id,
-    //     }
-    // } else {
-    //     taskData = {
-    //         description: data.description,
-    //     }
-    // }
-
-    // console.log(taskData)
-
     const response = await fetch(`${apiBaseURL}/tasks`, {
         method: 'POST',
         body: JSON.stringify(data),
