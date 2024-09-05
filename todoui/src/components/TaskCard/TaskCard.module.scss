@@ -1,9 +1,9 @@
 .TaskCard {
     display: flex;
-    flex-direction: column;
-    width: 50%;
+    justify-content: space-between;
+    width: 70%;
     border: 1px solid black;
-    padding: 0 2em;
+    padding: 0 1em;
     text-decoration: none;
     color: black;
 }
@@ -15,4 +15,16 @@
 .Buttons {
     display: flex;
     flex-direction: column;
+}
+
+.TaskInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    width: 85%;
+}
+
+.Checkbox {
+    display: flex;
+    margin: 0.5em;
 }
