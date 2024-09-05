@@ -55,7 +55,7 @@ const TasksPage = () => {
             </form>
 
             {tasks.length === 0 ? (
-                <p>No tasks yet</p>
+                <p>No current pending tasks</p>
             ) : (
                 tasks.map((task) => (
                     <TaskCard key={task.id} task={task} />

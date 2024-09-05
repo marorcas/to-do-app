@@ -22,6 +22,9 @@ public class Task {
     @Column
     private String description;
 
+    @Column
+    private Boolean isCompleted;
+
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = true)
     @JsonIgnoreProperties("tasks")
@@ -38,6 +41,10 @@ public class Task {
         return description;
     }
 
+    public Boolean getIsCompleted() {
+        return isCompleted;
+    }
+
     public Category getCategory() {
         return category;
     }
@@ -52,5 +59,9 @@ public class Task {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public void setIsCompleted(Boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
 }

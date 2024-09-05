@@ -38,6 +38,8 @@ public class TaskService {
             }
         }
 
+        newTask.setIsCompleted(false);
+
         if (errors.hasErrors()) {
             throw new ServiceValidationException(errors);
         }
@@ -77,10 +79,17 @@ public class TaskService {
             } else {
                 foundTask.setCategory(categoryResult.get());
             }
+        }
 
-            if (errors.hasErrors()) {
-                throw new ServiceValidationException(errors);
-            }
+        Boolean isCompleted = data.getIsCompleted();
+        if (isCompleted != null) {
+            foundTask.setIsCompleted(isCompleted);
+        } else {
+            errors.addError("isCompleted", String.format("Value entered is not a boolean"));
+        }
+
+        if (errors.hasErrors()) {
+            throw new ServiceValidationException(errors);
         }
 
         Task updatedTask = this.repo.save(foundTask);

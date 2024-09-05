@@ -13,6 +13,8 @@ public class CreateTaskDTO {
     @CategoryIdValid
     private Long categoryId;
 
+    private Boolean isCompleted;
+
     public String getDescription() {
         return description;
     }
@@ -21,12 +23,20 @@ public class CreateTaskDTO {
         return categoryId;
     }
 
+    public Boolean getIsCompleted() {
+        return isCompleted;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public void setIsCompleted(Boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
 
     @Override
