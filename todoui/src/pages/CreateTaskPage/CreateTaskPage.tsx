@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { TaskFormData } from "../../components/TaskForm/schema";
 import TaskForm from "../../components/TaskForm/TaskForm";
 import { createTask } from "../../services/task-services";
+import styles from "./CreateTaskPage.module.scss";
 
 const CreateTaskPage = () => {
     const navigate = useNavigate();
@@ -15,10 +16,10 @@ const CreateTaskPage = () => {
             .catch((e) => console.log(e));
     }
     return(
-        <>
-            <h1>Add New Task</h1>
+        <div className={styles.CreateTaskPage}>
+            <h1>Create New Task</h1>
             <TaskForm onSubmit={onSubmit} />
-        </>
+        </div>
     )
 }
 

@@ -3,6 +3,7 @@ import { editTaskById, getTaskById, TaskResponse } from "../../services/task-ser
 import { useNavigate, useParams } from "react-router-dom";
 import TaskForm from "../../components/TaskForm/TaskForm";
 import { TaskFormData } from "../../components/TaskForm/schema";
+import styles from "./EditTaskPage.module.scss";
 
 type FetchStatus = 'IDLE' | 'LOADING' | 'SUCCESS' | 'FAILURE';
  
@@ -42,7 +43,7 @@ const EditTaskPage = () => {
     }
 
     return (
-        <>
+        <div className={styles.EditTaskPage}>
             <h1>Edit Task {id}</h1>
             {fetchStatus === 'LOADING' && <p>Loading...</p>}
 
@@ -59,7 +60,7 @@ const EditTaskPage = () => {
                     onSubmit={onSubmit} 
                 />
             }
-        </>
+        </div>
     )
 }
 
