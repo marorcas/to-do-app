@@ -6,6 +6,7 @@ const apiBaseURL = import.meta.env.VITE_API_BASE_URL;
 export interface TaskResponse {
     id: number;
     description: string;
+    isCompleted: boolean;
     category: CategoryResponse;
 }
 
@@ -74,6 +75,26 @@ export const createTask = async (data: TaskFormData) => {
             'Content-Type': 'application/json'
         }
     });
+    if (!response) {
+        throw new Error('Failed to post');
+    }
+
+    return (await response.json()) as TaskResponse;
+}
+
+export const markTaskStatus = async (id: number, taskStatus: boolean) => {
+    const response = await fetch(`${apiBaseURL}/tasks/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(
+            {
+                "isCompleted": taskStatus
+            }
+        ),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
     if (!response) {
         throw new Error('Failed to post');
     }

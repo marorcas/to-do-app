@@ -81,12 +81,14 @@ public class TaskService {
             }
         }
 
-        Boolean isCompleted = data.getIsCompleted();
-        if (isCompleted != null) {
-            foundTask.setIsCompleted(isCompleted);
-        } else {
-            errors.addError("isCompleted", String.format("Value entered is not a boolean"));
+        // Boolean isCompleted = data.getIsCompleted();
+        if (data.getIsCompleted() != null) {
+            foundTask.setIsCompleted(data.getIsCompleted());
         }
+        // else {
+        // errors.addError("isCompleted", String.format("Value entered is not a
+        // boolean"));
+        // }
 
         if (errors.hasErrors()) {
             throw new ServiceValidationException(errors);
