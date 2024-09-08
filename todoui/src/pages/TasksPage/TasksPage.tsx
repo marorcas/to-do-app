@@ -54,13 +54,15 @@ const TasksPage = () => {
                 <CategorySelector selectedCategoryId={categoryId} onChange={handleCategoryChange}/>
             </form>
 
-            {tasks.length === 0 ? (
-                <p>No current pending tasks</p>
-            ) : (
-                tasks.map((task) => (
-                    <TaskCard key={task.id} task={task} />
-                ))
-            )}
+            <div className={styles.TasksContainer}>
+                {tasks.length === 0 ? (
+                    <p>No current pending tasks</p>
+                ) : (
+                    tasks.map((task) => (
+                        <TaskCard key={task.id} task={task} />
+                    ))
+                )}
+            </div>
         </div>
     )
 }

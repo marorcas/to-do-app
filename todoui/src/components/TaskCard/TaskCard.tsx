@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { markTaskStatus, TaskResponse } from "../../services/task-services";
 import styles from "./TaskCard.module.scss";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import HighlighterIcon from "./HighlighterIcon";
 
 interface TaskProps {
     task: TaskResponse;
@@ -21,12 +22,14 @@ const TaskCard = ({ task }: TaskProps) => {
 
     return(
         <article className={styles.TaskCard}>
-            <input
-                className={styles.Checkbox}
-                type="checkbox"
-                checked={isCompleted}
-                onChange={toggleIsCompleted}
-            />
+            <div className={styles.CheckboxContainer}>
+                <input
+                    className={styles.Checkbox}
+                    type="checkbox"
+                    checked={isCompleted}
+                    onChange={toggleIsCompleted}
+                />
+            </div>
 
             <Link 
                 className={styles.TaskInfo}
@@ -34,8 +37,12 @@ const TaskCard = ({ task }: TaskProps) => {
                 to={`tasks/${task.id}/edit`}
             >
                     <h2 className={styles.Task}>{task.description}</h2>
-                    <h3 className={styles.Category}>category: {task.category?.name ?? 'none'}</h3>
+                    {/* <h3 className={styles.Category}>category: {task.category?.name ?? 'none'}</h3> */}
             </Link>
+
+            <div className={styles.HighlighterContainer}>
+                <HighlighterIcon />
+            </div>
         </article>
     )
 }

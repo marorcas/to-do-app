@@ -1,10 +1,14 @@
+@use "../../scss/partials/queries" as q;
+
 .TasksPage {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     width: 100%;
     gap: 1em;
     padding: 2em 0;
+    background-color: #EEE5E9;
 }
 
 .FilterByCategory {
@@ -18,4 +22,15 @@
 .Links {
     display: flex;
     gap: 2em;
+}
+
+.TasksContainer {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    border-bottom: 1px solid black;
+
+    @include q.desktop {
+        width: 70%;
+    }
 }
