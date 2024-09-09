@@ -90,6 +90,10 @@ public class TaskService {
         // boolean"));
         // }
 
+        if (data.getHasPriority() != null) {
+            foundTask.setHasPriority(data.getHasPriority());
+        }
+
         if (errors.hasErrors()) {
             throw new ServiceValidationException(errors);
         }

@@ -15,6 +15,8 @@ public class UpdateTaskDTO {
 
     private Boolean isCompleted;
 
+    private Boolean hasPriority;
+
     public String getDescription() {
         return description;
     }
@@ -27,6 +29,10 @@ public class UpdateTaskDTO {
         return isCompleted;
     }
 
+    public Boolean getHasPriority() {
+        return hasPriority;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -37,6 +43,10 @@ public class UpdateTaskDTO {
 
     public void setIsCompleted(Boolean isCompleted) {
         this.isCompleted = isCompleted;
+    }
+
+    public void setHasPriority(Boolean hasPriority) {
+        this.hasPriority = hasPriority;
     }
 
     @Override

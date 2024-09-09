@@ -25,6 +25,9 @@ public class Task {
     @Column
     private Boolean isCompleted;
 
+    @Column
+    private Boolean hasPriority;
+
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = true)
     @JsonIgnoreProperties("tasks")
@@ -49,6 +52,10 @@ public class Task {
         return category;
     }
 
+    public Boolean getHasPriority() {
+        return hasPriority;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -63,5 +70,9 @@ public class Task {
 
     public void setIsCompleted(Boolean isCompleted) {
         this.isCompleted = isCompleted;
+    }
+
+    public void setHasPriority(Boolean hasPriority) {
+        this.hasPriority = hasPriority;
     }
 }

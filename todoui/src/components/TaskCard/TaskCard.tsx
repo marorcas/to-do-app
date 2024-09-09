@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { markTaskStatus, TaskResponse } from "../../services/task-services";
+import { markTaskPriority, markTaskStatus, TaskResponse } from "../../services/task-services";
 import styles from "./TaskCard.module.scss";
 import { useState } from "react";
 import HighlighterIcon from "./HighlighterIcon";
@@ -10,6 +10,7 @@ interface TaskProps {
 
 const TaskCard = ({ task }: TaskProps) => {
     const [isCompleted, setIsCompleted] = useState<boolean>(task.isCompleted);
+    const [hasPriority, setHasPriority] = useState<boolean>(false);
 
     const toggleIsCompleted = async () => {
         const completedStatus = !isCompleted;
@@ -17,8 +18,29 @@ const TaskCard = ({ task }: TaskProps) => {
 
         await markTaskStatus(task.id, completedStatus);
 
+        task.isCompleted = completedStatus;
+
         console.log(task);
     }
+
+    const toggleHasPriority = async () => {
+        const priorityStatus = !hasPriority;
+        setHasPriority(priorityStatus);
+
+        await markTaskPriority(task.id, priorityStatus);
+
+        task.hasPriority = priorityStatus;
+
+        console.log(task);
+    }
+
+    const taskClassNames = [
+        styles.Task,
+        isCompleted && styles.Completed,
+        hasPriority && styles.Priority
+      ]
+        .filter(Boolean) // Remove false or undefined values
+        .join(' ');
 
     return(
         <article className={styles.TaskCard}>
@@ -36,13 +58,12 @@ const TaskCard = ({ task }: TaskProps) => {
                 key={task.id}
                 to={`tasks/${task.id}/edit`}
             >
-                    <h2 className={styles.Task}>{task.description}</h2>
-                    {/* <h3 className={styles.Category}>category: {task.category?.name ?? 'none'}</h3> */}
+                <h2 className={taskClassNames}>{task.description}</h2>
             </Link>
 
-            <div className={styles.HighlighterContainer}>
+            <button className={styles.HighlighterContainer} onClick={toggleHasPriority}>
                 <HighlighterIcon />
-            </div>
+            </button>
         </article>
     )
 }

@@ -7,6 +7,7 @@ export interface TaskResponse {
     id: number;
     description: string;
     isCompleted: boolean;
+    hasPriority: boolean;
     category: CategoryResponse;
 }
 
@@ -88,6 +89,26 @@ export const markTaskStatus = async (id: number, taskStatus: boolean) => {
         body: JSON.stringify(
             {
                 "isCompleted": taskStatus
+            }
+        ),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!response) {
+        throw new Error('Failed to post');
+    }
+
+    return (await response.json()) as TaskResponse;
+}
+
+export const markTaskPriority = async (id: number, taskPriority: boolean) => {
+    const response = await fetch(`${apiBaseURL}/tasks/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(
+            {
+                "hasPriority": taskPriority
             }
         ),
         headers: {

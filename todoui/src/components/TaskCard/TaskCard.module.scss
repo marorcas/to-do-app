@@ -6,9 +6,13 @@
     border: 1px solid rgb(black, 0.5);
     border-bottom: none;
     background-color: #eef0f2;
+
+    // :hover {
+    //     cursor: url('../../assets/pen-hover.svg'), auto;
+    // }
 }
 
-.Task, .Category {
+.Task, .Category, .PriorityTask {
     font-weight: normal;
 }
 
@@ -53,4 +57,19 @@
     width: 15%;
     justify-content: center;
     align-items: center;
+    border: none;
+    background-color: transparent;
+
+    :hover {
+        cursor: pointer;
+    }
+}
+
+.Priority {
+    background-color: #f7ff00;
+}
+
+.Completed {
+    text-decoration: line-through;
+    text-decoration-thickness: 3px;
 }
