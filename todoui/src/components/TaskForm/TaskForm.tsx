@@ -80,33 +80,40 @@ const TaskForm = ({
             >
 
                 <div className={styles.field}>
-                    {/* <div className={styles.field}> */}
-                        <label htmlFor="description">Description</label>
-                        <input 
-                            id="description" 
-                            type="text" {...register('description')} 
-                            onChange={handleDescriptionChange}
-                            placeholder="Add description..."
-                        />
-                        {errors?.description && 
-                            <small className={styles.error_text}>
-                                {errors.description.message}
-                            </small>
-                        }
-                    {/* </div> */}
+                    <label htmlFor="description">Description</label>
+                    <input 
+                        id="description" 
+                        type="text" {...register('description')} 
+                        onChange={handleDescriptionChange}
+                        placeholder="Add description..."
+                    />
+                    {errors?.description && 
+                        <small className={styles.error_text}>
+                            {errors.description.message}
+                        </small>
+                    }
 
-                    {/* <div className={styles.field}> */}
-                        <label htmlFor="category">Category</label>
-                        <CategorySelector 
-                            selectedCategoryId={categoryId} 
-                            onChange={handleCategoryChange} 
-                        />
-                        {errors?.categoryId && 
-                            <small className={styles.error_text}>
-                                {errors.categoryId.message}
-                            </small>
-                        }
-                    {/* </div> */}
+                    <label htmlFor="category">Category</label>
+                    <CategorySelector 
+                        selectedCategoryId={categoryId} 
+                        onChange={handleCategoryChange} 
+                    />
+                    <div className={styles.RemoveContainer}>
+                        <button 
+                            type="button"
+                            className={styles.Remove}
+                            onClick={() => {
+                                setCategoryId(0);
+                            }}
+                        >
+                            Remove
+                        </button>
+                    </div>
+                    {errors?.categoryId && 
+                        <small className={styles.error_text}>
+                            {errors.categoryId.message}
+                        </small>
+                    }
                 </div>
 
                 <div className={styles.Buttons}>

@@ -42,9 +42,13 @@ export const getTasksByCategory = async (id: number) => {
 }
 
 export const editTaskById = async (id: number, data: TaskFormData) => {
+    let updatedData = {
+        description: data.description,
+        categoryId: data.categoryId === 0 ? null : data.categoryId
+    }
     const response = await fetch(`${apiBaseURL}/tasks/${id}`, {
         method: 'PATCH',
-        body: JSON.stringify(data),
+        body: JSON.stringify(updatedData),
         headers: {
             'Content-Type': 'application/json'
         }

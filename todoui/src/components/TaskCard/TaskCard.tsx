@@ -1,14 +1,23 @@
 import { Link } from "react-router-dom";
-import { markTaskPriority, markTaskStatus, TaskResponse } from "../../services/task-services";
+import { getAllTasks, markTaskPriority, markTaskStatus, TaskResponse } from "../../services/task-services";
 import styles from "./TaskCard.module.scss";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import HighlighterIcon from "./HighlighterIcon";
+import { TaskContext } from "../../contexts/TaskContextProvider/TaskContextProvider";
 
 interface TaskProps {
     task: TaskResponse;
 }
 
 const TaskCard = ({ task }: TaskProps) => {
+    const context = useContext(TaskContext);
+
+    if (context === undefined) {
+        throw new Error('Something went wrong');
+    }
+
+    const { setTasks } = context;
+
     const [isCompleted, setIsCompleted] = useState<boolean>(task.isCompleted);
     const [hasPriority, setHasPriority] = useState<boolean>(task.hasPriority);
 
@@ -21,6 +30,22 @@ const TaskCard = ({ task }: TaskProps) => {
         task.isCompleted = completedStatus;
 
         console.log(task);
+
+        if (completedStatus) {
+            getAllTasks()
+                .then((data) => {
+                    const updatedData = data.filter((task) => !task.isCompleted);
+                    setTasks(updatedData);
+                })
+                .catch((e) => console.warn(e));
+        } else {
+            getAllTasks()
+                .then((data) => {
+                    const updatedData = data.filter((task) => task.isCompleted);
+                    setTasks(updatedData);
+                })
+                .catch((e) => console.warn(e));
+        }
     }
 
     const toggleHasPriority = async () => {

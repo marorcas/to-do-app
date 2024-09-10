@@ -27,3 +27,22 @@
     padding: 1em;
     margin: 1em;
 }
+
+.Remove {
+    background-color: none;
+    border: none;
+    text-decoration: underline;
+    color: darkslateblue;
+    cursor: pointer;
+    padding: 0;
+    line-height: normal;
+
+    :hover, :focus {
+        box-shadow: none;
+    }
+}
+
+.RemoveContainer {
+    display: flex;
+    justify-content: flex-end;
+}
