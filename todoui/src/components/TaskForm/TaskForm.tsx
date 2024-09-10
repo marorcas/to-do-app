@@ -4,7 +4,7 @@ import { schema, TaskFormData } from "./schema";
 import styles from "./TaskForm.module.scss";
 import CategorySelector from "../CategorySelector/CategorySelector";
 import { useContext, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { TaskContext } from "../../contexts/TaskContextProvider/TaskContextProvider";
 import { deleteTaskById } from "../../services/task-services";
 
@@ -73,45 +73,51 @@ const TaskForm = ({
     isSubmitSuccessful && reset();
 
     return(
-        <form 
+        <>
+            <form 
             className={styles.form} 
             onSubmit={handleSubmit(() => onSubmit({description, categoryId}))}
-        >
+            >
 
-            <div className={styles.field}>
-                {/* <div className={styles.field}> */}
-                    <label htmlFor="description">Description</label>
-                    <input 
-                        id="description" 
-                        type="text" {...register('description')} 
-                        onChange={handleDescriptionChange}
-                        placeholder="Add description..."
-                    />
-                    {errors?.description && 
-                        <small className={styles.error_text}>
-                            {errors.description.message}
-                        </small>
-                    }
-                {/* </div> */}
+                <div className={styles.field}>
+                    {/* <div className={styles.field}> */}
+                        <label htmlFor="description">Description</label>
+                        <input 
+                            id="description" 
+                            type="text" {...register('description')} 
+                            onChange={handleDescriptionChange}
+                            placeholder="Add description..."
+                        />
+                        {errors?.description && 
+                            <small className={styles.error_text}>
+                                {errors.description.message}
+                            </small>
+                        }
+                    {/* </div> */}
 
-                {/* <div className={styles.field}> */}
-                    <label htmlFor="category">Category</label>
-                    <CategorySelector 
-                        selectedCategoryId={categoryId} 
-                        onChange={handleCategoryChange} 
-                    />
-                    {errors?.categoryId && 
-                        <small className={styles.error_text}>
-                            {errors.categoryId.message}
-                        </small>
-                    }
-                {/* </div> */}
-            </div>
+                    {/* <div className={styles.field}> */}
+                        <label htmlFor="category">Category</label>
+                        <CategorySelector 
+                            selectedCategoryId={categoryId} 
+                            onChange={handleCategoryChange} 
+                        />
+                        {errors?.categoryId && 
+                            <small className={styles.error_text}>
+                                {errors.categoryId.message}
+                            </small>
+                        }
+                    {/* </div> */}
+                </div>
 
-            {formType === "EDIT" && <button onClick={() => onDelete(idNumber)}>Delete</button>}
-            
-            <button type="submit">{formType === 'ADD' ? 'Add' : 'Edit'}</button>
-        </form>
+                <div className={styles.Buttons}>
+                    {formType === "EDIT" && <button className={styles.Button} onClick={() => onDelete(idNumber)}>Delete</button>}
+                    
+                    <button className={styles.Button} type="submit">{formType === 'ADD' ? 'Add' : 'Edit'}</button>
+                </div>
+            </form>
+
+            <Link className={styles.Cancel} to="/">Cancel</Link>
+        </>
     )
 }
 

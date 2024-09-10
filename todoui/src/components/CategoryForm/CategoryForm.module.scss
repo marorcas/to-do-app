@@ -16,3 +16,14 @@
 .error_text {
     color: red;
 }
+
+.Buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Button {
+    padding: 1em;
+    margin: 1em;
+}

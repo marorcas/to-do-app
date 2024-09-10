@@ -1,9 +1,13 @@
 import { useContext, useState } from "react";
 import styles from "./PriorityButton.module.scss";
 import { TaskContext } from "../../contexts/TaskContextProvider/TaskContextProvider";
-import { getAllTasks } from "../../services/task-services";
+import { getAllTasks, getTasksByCategory } from "../../services/task-services";
 
-const PriorityButton = () => {
+interface PriorityButtonProps {
+    selectedCategoryId: number | undefined;
+}
+
+const PriorityButton = ({ selectedCategoryId = 0 }: PriorityButtonProps) => {
     const context = useContext(TaskContext);
 
     if (context === undefined) {
@@ -22,12 +26,23 @@ const PriorityButton = () => {
             const updatedTasks = tasks.filter(task => task.hasPriority);
             setTasks(updatedTasks);
         } else {
-            getAllTasks()
+            if (selectedCategoryId > 0) {
+                getTasksByCategory(selectedCategoryId)
                 .then((data) => {
                     const updatedData = data.filter((task) => !task.isCompleted);
                     setTasks(updatedData);
                 })
-                .catch((e) => console.warn(e));
+                .catch((e) => {
+                    console.warn(e);
+                });
+            } else {
+                getAllTasks()
+                    .then((data) => {
+                        const updatedData = data.filter((task) => !task.isCompleted);
+                        setTasks(updatedData);
+                    })
+                    .catch((e) => console.warn(e));
+            }
 
         }
     }

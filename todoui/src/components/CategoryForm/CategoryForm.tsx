@@ -5,7 +5,7 @@ import { CategoryContext } from "../../contexts/CategoryContextProvider/Category
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import styles from "./CategoryForm.module.scss";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const CategoryForm = () => {
     const {
@@ -43,29 +43,35 @@ const CategoryForm = () => {
     isSubmitSuccessful && reset();
 
     return(
-        <form 
+        <>
+            <form 
             className={styles.form} 
             onSubmit={handleSubmit(onSubmit)}
-        >
+            >
 
-            <div className={styles.field}>
-                <label htmlFor="category">Category</label>
-                <input 
-                    id="name" 
-                    type="text" {...register('name')}
-                    onChange={handleNameChange}
-                    placeholder="Create new category..."
-                />
+                <div className={styles.field}>
+                    <label htmlFor="category">Category</label>
+                    <input 
+                        id="name" 
+                        type="text" {...register('name')}
+                        onChange={handleNameChange}
+                        placeholder="Create new category..."
+                    />
 
-                {errors?.name && 
-                    <small className={styles.error_text}>
-                        {errors.name.message}
-                    </small>
-                }
-            </div>
-            
-            <button type="submit">Create</button>
-        </form>
+                    {errors?.name && 
+                        <small className={styles.error_text}>
+                            {errors.name.message}
+                        </small>
+                    }
+                </div>
+
+                <div className={styles.Buttons}>
+                    <button className={styles.Button} type="submit">Create</button>
+                </div>
+            </form>
+
+            <Link className={styles.Cancel} to="/">Cancel</Link>
+        </>
     )
 }
 

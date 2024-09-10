@@ -56,7 +56,7 @@ const TasksPage = () => {
             <div className={styles.FilterTabs}>
                 <CompletedButton selectedCategoryId={categoryId} />
 
-                <PriorityButton />
+                <PriorityButton selectedCategoryId={categoryId}/>
 
                 <CategorySelector selectedCategoryId={categoryId} onChange={handleCategoryChange}/>
             </div>
