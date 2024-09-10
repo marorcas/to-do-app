@@ -10,7 +10,7 @@ interface TaskProps {
 
 const TaskCard = ({ task }: TaskProps) => {
     const [isCompleted, setIsCompleted] = useState<boolean>(task.isCompleted);
-    const [hasPriority, setHasPriority] = useState<boolean>(false);
+    const [hasPriority, setHasPriority] = useState<boolean>(task.hasPriority);
 
     const toggleIsCompleted = async () => {
         const completedStatus = !isCompleted;

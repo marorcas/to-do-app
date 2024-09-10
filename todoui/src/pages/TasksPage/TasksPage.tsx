@@ -5,6 +5,8 @@ import { useContext, useEffect, useState } from "react";
 import { TaskContext } from "../../contexts/TaskContextProvider/TaskContextProvider";
 import { Link } from "react-router-dom";
 import CategorySelector from "../../components/CategorySelector/CategorySelector";
+import CompletedButton from "../../components/CompletedButton/CompletedButton";
+import PriorityButton from "../../components/PriorityButton/PriorityButton";
 
 const TasksPage = () => {
     const context = useContext(TaskContext);
@@ -40,19 +42,20 @@ const TasksPage = () => {
 
     return(
         <div className={styles.TasksPage}>
-            <h1>Tasks</h1>
+            <h1>My To-Do List</h1>
 
             <div className={styles.Links}>
                 <Link className={styles.Link} to="/categories/new">Create category</Link>
                 <Link className={styles.Link} to="/tasks/new">Create task</Link>
             </div>
 
-            <form
-                className={styles.FilterByCategory}
-            >
-                <label>Filter tasks by category:</label>
+            <div className={styles.FilterTabs}>
+                <CompletedButton />
+
+                <PriorityButton />
+
                 <CategorySelector selectedCategoryId={categoryId} onChange={handleCategoryChange}/>
-            </form>
+            </div>
 
             <div className={styles.TasksContainer}>
                 {tasks.length === 0 ? (

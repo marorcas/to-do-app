@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { CategoryContext } from "../../contexts/CategoryContextProvider/CategoryContextProvider";
 import { getAllCategories } from "../../services/category-services";
 import React from "react";
+import styles from "./CategorySelector.module.scss";
 
 interface CategorySelectorProps {
     selectedCategoryId: number | undefined;
@@ -28,8 +29,12 @@ const CategorySelector = ({
     }, []);
 
     return(
-        <select value={selectedCategoryId} onChange={onChange}>
-            <option key={0} value={0}>Select a category</option>
+        <select 
+            value={selectedCategoryId} 
+            onChange={onChange} 
+            className={styles.CategorySelector}
+        >
+            <option key={0} value={0}>All</option>
             {categories.map((category) => (
                 <option key={category.id} value={category.id}>
                     {category.name}

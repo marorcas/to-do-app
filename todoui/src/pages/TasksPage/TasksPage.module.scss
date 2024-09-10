@@ -7,21 +7,18 @@
     align-items: center;
     height: 100%;
     width: 100%;
-    gap: 1em;
     padding: 2em 0;
 }
 
 .FilterByCategory {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 0.5em;
-    padding: 1em;
 }
 
 .Links {
     display: flex;
     gap: 2em;
+    padding: 2em;
 }
 
 .TasksContainer {
@@ -41,4 +38,11 @@
     @include q.desktop-xlg {
         width: 40%;
     }
+}
+
+.FilterTabs {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5em;
+    height: 60px;
 }
