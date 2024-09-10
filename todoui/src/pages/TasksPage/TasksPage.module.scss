@@ -43,6 +43,20 @@
 .FilterTabs {
     display: flex;
     align-items: flex-end;
+    justify-content: flex-end;
     gap: 0.5em;
     height: 60px;
+    width: 90%;
+
+    @include q.desktop {
+        width: 65%;
+    }
+
+    @include q.desktop-lg {
+        width: 45%;
+    }
+
+    @include q.desktop-xlg {
+        width: 35%;
+    }
 }

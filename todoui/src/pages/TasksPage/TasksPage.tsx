@@ -28,14 +28,18 @@ const TasksPage = () => {
         if (categoryId > 0) {
             getTasksByCategory(categoryId)
             .then((data) => {
-                setTasks(data);
+                const updatedData = data.filter((task) => !task.isCompleted);
+                setTasks(updatedData);
             })
             .catch((e) => {
                 console.warn(e);
             });
         } else {
             getAllTasks()
-                .then((data) => setTasks(data))
+                .then((data) => {
+                    const updatedData = data.filter((task) => !task.isCompleted);
+                    setTasks(updatedData);
+                })
                 .catch((e) => console.warn(e));
         }
     }, [categoryId]);
@@ -50,7 +54,7 @@ const TasksPage = () => {
             </div>
 
             <div className={styles.FilterTabs}>
-                <CompletedButton />
+                <CompletedButton selectedCategoryId={categoryId} />
 
                 <PriorityButton />
 

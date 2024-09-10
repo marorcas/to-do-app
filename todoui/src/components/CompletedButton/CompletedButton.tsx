@@ -1,9 +1,13 @@
 import { useContext, useState } from "react";
 import styles from "./CompletedButton.module.scss";
 import { TaskContext } from "../../contexts/TaskContextProvider/TaskContextProvider";
-import { getAllTasks } from "../../services/task-services";
+import { getAllTasks, getTasksByCategory } from "../../services/task-services";
 
-const CompletedButton = () => {
+interface CompletedButtonProps {
+    selectedCategoryId: number | undefined;
+}
+
+const CompletedButton = ({ selectedCategoryId = 0 } : CompletedButtonProps) => {
     const context = useContext(TaskContext);
 
     if (context === undefined) {
@@ -19,12 +23,30 @@ const CompletedButton = () => {
         setCompleted(completedStatus);
 
         if (completedStatus) {
-            const updatedTasks = tasks.filter(task => task.isCompleted === true);
-            setTasks(updatedTasks);
-        } else {
             getAllTasks()
-                .then((data) => setTasks(data))
+                .then((data) => {
+                    const updatedData = data.filter((task) => task.isCompleted);
+                    setTasks(updatedData);
+                })
                 .catch((e) => console.warn(e));
+        } else {
+            if (selectedCategoryId > 0) {
+                getTasksByCategory(selectedCategoryId)
+                .then((data) => {
+                    const updatedData = data.filter((task) => !task.isCompleted);
+                    setTasks(updatedData);
+                })
+                .catch((e) => {
+                    console.warn(e);
+                });
+            } else {
+                getAllTasks()
+                    .then((data) => {
+                        const updatedData = data.filter((task) => !task.isCompleted);
+                        setTasks(updatedData);
+                    })
+                    .catch((e) => console.warn(e));
+            }
 
         }
     }
