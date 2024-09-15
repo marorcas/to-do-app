@@ -13,6 +13,8 @@
 
 An application that allows you to track, add, and delete tasks as well as manage categories of tasks.
 
+Check out my Go/MongoDB version of this app [here](https://github.com/marorcas/go-todo).
+
 ## Features
 
 Key features of the project.
